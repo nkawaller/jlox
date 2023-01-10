@@ -1,11 +1,11 @@
-package com.craftinginterpreters.lox;
+package lox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static lox.TokenType.*;
 
 class Scanner {
 
@@ -126,7 +126,7 @@ class Scanner {
       while (isDigit(peek())) advance();
     }
 
-    addToken(NUMBER
+    addToken(NUMBER,
       Double.parseDouble(source.substring(start, current)));
   }
 
@@ -146,7 +146,7 @@ class Scanner {
 
     // Trim the surrounding quotes.
     String value = source.substring(start + 1, current - 1);
-    addToken(STRING, value)
+    addToken(STRING, value);
   }
 
   private boolean match(char expected) {
@@ -164,7 +164,7 @@ class Scanner {
 
   private char peekNext() {
     if (current + 1 >= source.length()) return '\0';
-    return source.charAt(current + 1)
+    return source.charAt(current + 1);
   }
 
   private boolean isAlpha(char c) {
@@ -182,7 +182,7 @@ class Scanner {
   }
 
   private boolean isAtEnd() {
-    return current >= source.length()
+    return current >= source.length();
   }
 
   private char advance() {

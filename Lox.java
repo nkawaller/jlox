@@ -1,4 +1,4 @@
-package com.craftinginterpreters.lox;
+package lox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,12 +46,11 @@ public class Lox {
   }
 
   private static void run(String source) {
-    Scanner scanner = new Scanner(source) {
-      List<Token> tokens = scanner.scanTokens();
+    Scanner scanner = new Scanner(source);
+    List<Token> tokens = scanner.scanTokens();
 
-      for (Token token : tokens) {
-        System.out.println(token);
-      }
+    for (Token token : tokens) {
+      System.out.println(token);
     }
   }
 
@@ -64,6 +63,5 @@ public class Lox {
     System.err.println(
       "[line " + line + "] Error" + where + ": " + message);
     hadError = true;
-    )
   }
 }
