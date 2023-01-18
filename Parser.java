@@ -63,22 +63,22 @@ class Parser {
   }
 
   private Expr factor() {
-    Expr expr = urnary();
+    Expr expr = unary();
 
     while(match(SLASH, STAR)) {
       Token operator = previous();
-      Expr right = urnary();
+      Expr right = unary();
       expr = new Expr.Binary(expr, operator, right);
     }
 
     return expr;
   }
 
-  private Expr urnary() {
+  private Expr unary() {
     if (match(BANG, MINUS)) {
       Token operator = previous();
-      Expr right = urnary();
-      return new Expr.Urnary(operator, right);
+      Expr right = unary();
+      return new Expr.Unary(operator, right);
     }
 
     return primary();
@@ -103,7 +103,7 @@ class Parser {
   }
 
   private boolean match(TokenType... types) {
-    for (TokenType : types) {
+    for (TokenType type : types) {
       if (check(type)) {
         advance();
         return true;
@@ -119,7 +119,7 @@ class Parser {
     throw error(peek(), message);
   }
 
-  private boolean check(TokenType, type) {
+  private boolean check(TokenType type) {
     if (isAtEnd()) return false;
     return peek().type == type;
   }
