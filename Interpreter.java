@@ -150,6 +150,13 @@ class Interpreter implements Expr.Visitor<Object>,
   }
 
   @Override
+  public Void visitFunctionStmt(Stmt.Function stmt) {
+    LoxFunction function = new LoxFunction(stmt);
+    environment.define(stmt.name.lexeme, function);
+    return null;
+  }
+
+  @Override
   public Void visitIfStmt(Stmt.If stmt) {
     if (isTruthy(evaluate(stmt.condition))) {
       execute(stmt.thenBranch);
@@ -254,9 +261,9 @@ class Interpreter implements Expr.Visitor<Object>,
     LoxCallable function = (LoxCallable)callee;
     if (arguments.size() != function.arity()) {
       throw new RuntimeError(expr.paren, "Expected " +
-          function.airity() + " arguments but got " +
+          function.arity() + " arguments but got " +
           arguments.size() + ".");
     }
-    return function.call(this.arguments);
+    return function.call(this, arguments);
   }
 }
