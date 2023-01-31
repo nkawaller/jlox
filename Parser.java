@@ -31,6 +31,7 @@ class Parser {
 
   private Stmt declaration() {
     try {
+      if (match(FUN)) return fuction("function");
       if (match(VAR)) return varDeclaration();
 
       return statement();
@@ -136,6 +137,10 @@ class Parser {
     Expr expr = expression();
     consume(SEMICOLON, "Expect ';' after value.");
     return new Stmt.Expression(expr);
+  }
+
+  private Stmt.Function function(String kind) {
+    Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
   }
 
   private List<Stmt> block() {
